@@ -1,4 +1,4 @@
-# ruby_morse_code<a name="readme-top"></a>
+# school-library<a name="readme-top"></a>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -24,7 +24,7 @@
 
 # 📖 school-library <a name="about-project"></a>
 
-**school-library** School-library is web-based application designed to streamline and manage the library operations for schools.
+**school-library** is web-based application designed to streamline and manage the library operations for schools.
 
 ## 🛠 Built With <a name="built-with"></a>
 
