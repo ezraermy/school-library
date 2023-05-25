@@ -13,17 +13,21 @@ class App
   end
 
   def list_all_books
+    puts '---------------------------------------------'
     puts 'List of all books:'
     @books.each_with_index do |book, index|
       puts "#{index + 1}. #{book.title} Author: #{book.author}"
     end
+    puts '---------------------------------------------'
   end
 
   def list_all_people
+    puts '---------------------------------------------'
     puts 'List of all people:'
     @people.each_with_index do |person, index|
       puts "#{index + 1}. #{person.name} (ID: #{person.id}) Age: #{person.age}"
     end
+    puts '---------------------------------------------'
   end
 
   def create_person_menu
@@ -82,29 +86,46 @@ class App
   end
 
   def create_rental
+    book = select_book
+    return if book.nil?
+
+    person = select_person
+    return if person.nil?
+
     puts 'Enter the rental date (e.g., YYYY-MM-DD):'
     date = gets.chomp
-    puts 'Available books:'
-    list_all_books
-    puts 'Enter the number corresponding to the book:'
-    book_number = gets.chomp.to_i
-    book = @books[book_number - 1]
-    if book.nil?
-      puts 'Invalid book number. Please try again.'
-      return
-    end
-    puts 'Available people:'
-    list_all_people
-    puts 'Enter the number corresponding to the person:'
-    person_number = gets.chomp.to_i
-    person = @people[person_number - 1]
-    if person.nil?
-      puts 'Invalid person number. Please try again.'
-      return
-    end
+
     rental = Rental.new(date, book, person)
     @rentals << rental
     puts 'Rental created successfully'
+  end
+
+  def select_book
+    puts 'Available books:'
+    list_all_books
+
+    puts 'Enter the number corresponding to the book:'
+    book_number = gets.chomp.to_i
+
+    book = @books[book_number - 1]
+
+    puts 'Invalid book number. Please try again.' if book.nil?
+
+    book
+  end
+
+  def select_person
+    puts 'Available people:'
+    list_all_people
+
+    puts 'Enter the number corresponding to the person:'
+    person_number = gets.chomp.to_i
+
+    person = @people[person_number - 1]
+
+    puts 'Invalid person number. Please try again.' if person.nil?
+
+    person
   end
 
   def list_rentals_for_person
@@ -113,13 +134,15 @@ class App
     person = find_person(person_id)
     if person
       rentals = Rental.rentals_for_person(person_id)
+      puts '---------------------------------------------'
       puts "Rentals for person #{person.name} (ID: #{person.id}):"
       rentals.each do |rental|
-        puts "#{rental.book.title} (Rental Date: #{rental.date})"
+        puts "#{rental.book.title} by: #{rental.book.author} (Rental Date: #{rental.date})"
       end
     else
       puts 'Person not found. Please check the ID.'
     end
+    puts '---------------------------------------------'
   end
 
   private
