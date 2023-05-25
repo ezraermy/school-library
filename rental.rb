@@ -1,15 +1,19 @@
 class Rental
   attr_accessor :date, :book, :person
 
+  @@rentals = [] # Class variable to store all rentals
+
   def initialize(date, book, person)
     @date = date
     @book = book
     @person = person
 
-    @book = book
-    book.rentals << self
+    @book.rentals << self
+    @person.rentals << self
+    @@rentals << self
+  end
 
-    @person = person
-    person.rentals << self
+  def self.rentals_for_person(person_id)
+    @@rentals.select { |rental| rental.person.id == person_id }
   end
 end
