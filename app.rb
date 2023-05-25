@@ -16,7 +16,7 @@ class App
     puts '---------------------------------------------'
     puts 'List of all books:'
     @books.each_with_index do |book, index|
-      puts "#{index + 1}. #{book.title} Author: #{book.author}"
+      puts "#{index + 1}. Title: '#{book.title}' Author: #{book.author}"
     end
     puts '---------------------------------------------'
   end
@@ -25,7 +25,8 @@ class App
     puts '---------------------------------------------'
     puts 'List of all people:'
     @people.each_with_index do |person, index|
-      puts "#{index + 1}. #{person.name} (ID: #{person.id}) Age: #{person.age}"
+      role = person.is_a?(Student) ? 'Student' : 'Teacher'
+      puts "#{index + 1}. [#{role}] #{person.name} (ID: #{person.id}) Age: #{person.age}"
     end
     puts '---------------------------------------------'
   end
@@ -56,6 +57,7 @@ class App
     parent_permission = parent_permission_input == 'y'
 
     student = Student.new(age, nil, name, parent_permission: parent_permission)
+    student.role = 'student' # Add this line to set the role as "student"
     @people << student
     puts 'Person created successfully'
   end
@@ -71,6 +73,7 @@ class App
     specialization = gets.chomp
 
     teacher = Teacher.new(age, specialization, name)
+    teacher.role = 'teacher' # Add this line to set the role as "teacher"
     @people << teacher
     puts 'Person created successfully'
   end
@@ -137,7 +140,7 @@ class App
       puts '---------------------------------------------'
       puts "Rentals for person #{person.name} (ID: #{person.id}):"
       rentals.each do |rental|
-        puts "#{rental.book.title} by: #{rental.book.author} (Rental Date: #{rental.date})"
+        puts " '#{rental.book.title}' by: #{rental.book.author} (Rental Date: #{rental.date})"
       end
     else
       puts 'Person not found. Please check the ID.'
