@@ -73,6 +73,11 @@ To run tests, run the following command:
   rubocop
 ```
 
+### Run console
+```bash
+ruby main.rb
+```
+
 <p align="right"><a href="#readme-top">👆</a></p>
 
 <!-- AUTHORS -->
