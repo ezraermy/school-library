@@ -1,3 +1,5 @@
+require 'pry'
+
 require_relative 'book'
 require_relative 'person'
 require_relative 'rental'
@@ -110,7 +112,7 @@ class App
     puts 'Enter the number corresponding to the book:'
     book_number = gets.chomp.to_i
 
-    book = @books[book_number - 1]
+    book = @books[book_number]
 
     puts 'Invalid book number. Please try again.' if book.nil?
 
@@ -124,7 +126,7 @@ class App
     puts 'Enter the number corresponding to the person:'
     person_number = gets.chomp.to_i
 
-    person = @people[person_number - 1]
+    person = @people[person_number]
 
     puts 'Invalid person number. Please try again.' if person.nil?
 
@@ -158,3 +160,5 @@ class App
     @people.find { |person| person.id == id }
   end
 end
+
+binding.pry

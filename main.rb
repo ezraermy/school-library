@@ -1,3 +1,5 @@
+require 'pry'
+
 require_relative 'app'
 
 def main
@@ -11,6 +13,8 @@ def main
 
     break if choice == 7
   end
+  
+binding.pry
 
   exit_app
 end
@@ -74,3 +78,4 @@ def exit_app
 end
 
 main
+
