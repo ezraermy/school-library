@@ -37,6 +37,14 @@
   </ul>
 </details>
 
+### Key Features <a name="key-features"><a>
+- [list_books]
+- [list_person]
+- [insert_book]
+- [insert_person]
+- [create_rental]
+- [list_rental]
+
 <!-- Getting Started -->
 
 ## 💻 Getting Started <a name="getting-started"></a>
