@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 require_relative 'app'
 require_relative 'menu'
 
@@ -18,4 +16,3 @@ def main
 end
 
 main
->>>>>>> 90a5e7a8f9b757ccebc4ef710191f3f8bb8da36b
