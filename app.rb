@@ -1,5 +1,3 @@
-require 'pry'
-
 require_relative 'book'
 require_relative 'person'
 require_relative 'rental'
@@ -160,5 +158,3 @@ class App
     @people.find { |person| person.id == id }
   end
 end
-
-binding.pry
