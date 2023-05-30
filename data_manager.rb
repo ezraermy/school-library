@@ -69,4 +69,8 @@ module DataManager
       end
     end
   end
+  
+  def load_rentals
+    @rentals = load_data_from_file(RENTALS_FILE) || []
+  end
 end
