@@ -18,7 +18,6 @@ def main
   end
 
   app.save_data
-
 end
 
 main

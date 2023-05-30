@@ -24,7 +24,6 @@ module DataManager
       file.write(JSON.generate(book_data))
     end
   end
-  
 
   def save_people
     people_data = @people.map do |person|
@@ -32,11 +31,11 @@ module DataManager
       attributes['classroom'] = person.classroom.name if person.is_a?(Student) && person.classroom.is_a?(Classroom)
       attributes
     end
-  
+
     File.open(PEOPLE_FILE, 'w') do |file|
       file.write(JSON.generate(people_data))
     end
-  end  
+  end
 
   def save_rentals
     File.open(RENTALS_FILE, 'w') do |file|
@@ -53,23 +52,27 @@ module DataManager
   def load_books
     book_data = load_data_from_file(BOOKS_FILE)
     @books = book_data.nil? ? [] : book_data.map { |book_info| Book.new(book_info['title'], book_info['author']) }
-  end   
+  end
 
   def load_people
     people_data = load_data_from_file(PEOPLE_FILE)
-    @people = people_data.nil? ? [] : people_data.map do |person_info|
-      if person_info['role'] == 'student'
-        student = Student.new(person_info['age'], person_info['name'], parent_permission: person_info['parent_permission'])
-        student.role = 'student'
-        student
-      else
-        teacher = Teacher.new(person_info['age'], person_info['specialization'], person_info['name'])
-        teacher.role = 'teacher'
-        teacher
-      end
-    end
+    @people = if people_data.nil?
+                []
+              else
+                people_data.map do |person_info|
+                  if person_info['role'] == 'student'
+                    student = Student.new(person_info['age'], person_info['name'], parent_permission: person_info['parent_permission'])
+                    student.role = 'student'
+                    student
+                  else
+                    teacher = Teacher.new(person_info['age'], person_info['specialization'], person_info['name'])
+                    teacher.role = 'teacher'
+                    teacher
+                  end
+                end
+end
   end
-  
+
   def load_rentals
     @rentals = load_data_from_file(RENTALS_FILE) || []
   end
