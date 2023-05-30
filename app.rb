@@ -4,8 +4,11 @@ require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
 require_relative 'classroom'
+require_relative 'data_manager'
 
 class App
+  include DataManager
+
   def initialize
     @books = []
     @people = []
@@ -110,7 +113,7 @@ class App
     puts 'Enter the number corresponding to the book:'
     book_number = gets.chomp.to_i
 
-    book = @books[book_number]
+    book = @books[book_number - 1]
 
     puts 'Invalid book number. Please try again.' if book.nil?
 
@@ -124,7 +127,7 @@ class App
     puts 'Enter the number corresponding to the person:'
     person_number = gets.chomp.to_i
 
-    person = @people[person_number]
+    person = @people[person_number - 1]
 
     puts 'Invalid person number. Please try again.' if person.nil?
 

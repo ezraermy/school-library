@@ -11,6 +11,18 @@ class Student < Person
     classroom.add_student(self) if classroom.is_a?(Classroom) && !classroom.students.include?(self)
   end
 
+  def attributes
+    {
+      id: @id,
+      name: @name,
+      age: @age,
+      parent_permission: @parent_permission,
+      rentals: @rentals,
+      classroom: @classroom,
+      role: @role
+    }
+  end
+
   def play_hooky
     '¯\(ツ)/¯'
   end

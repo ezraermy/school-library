@@ -1,9 +1,12 @@
 require_relative 'app'
 require_relative 'menu'
+require_relative 'data_manager'
 
 def main
   app = App.new
   menu = Menu.new(app)
+
+  app.load_data
 
   loop do
     menu.display_menu_options
@@ -13,6 +16,9 @@ def main
 
     break if choice == 7
   end
+
+  app.save_data
+
 end
 
 main
