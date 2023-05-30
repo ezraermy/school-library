@@ -73,4 +73,11 @@ module DataManager
   def load_rentals
     @rentals = load_data_from_file(RENTALS_FILE) || []
   end
+
+  def load_data_from_file(filename)
+    return unless File.exist?(filename)
+
+    data = File.read(filename)
+    JSON.parse(data)
+  end
 end
