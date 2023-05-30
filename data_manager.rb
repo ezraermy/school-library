@@ -43,4 +43,30 @@ module DataManager
       file.write(JSON.generate(@rentals))
     end
   end
+
+  def load_data
+    load_books
+    load_people
+    load_rentals
+  end
+
+  def load_books
+    book_data = load_data_from_file(BOOKS_FILE)
+    @books = book_data.nil? ? [] : book_data.map { |book_info| Book.new(book_info['title'], book_info['author']) }
+  end   
+
+  def load_people
+    people_data = load_data_from_file(PEOPLE_FILE)
+    @people = people_data.nil? ? [] : people_data.map do |person_info|
+      if person_info['role'] == 'student'
+        student = Student.new(person_info['age'], person_info['name'], parent_permission: person_info['parent_permission'])
+        student.role = 'student'
+        student
+      else
+        teacher = Teacher.new(person_info['age'], person_info['specialization'], person_info['name'])
+        teacher.role = 'teacher'
+        teacher
+      end
+    end
+  end
 end
