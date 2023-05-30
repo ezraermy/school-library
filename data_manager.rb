@@ -15,14 +15,12 @@ module DataManager
   RENTALS_FILE = "#{DATA_DIR}/rentals.json".freeze
 
   def create_data_directory
-    FileUtils.mkdir_p(DATA_DIR) unless Dir.exist?(DATA_DIR)
+    FileUtils.mkdir_p(DATA_DIR)
   end
 
   def save_books
     book_data = @books.map { |book| { 'title' => book.title, 'author' => book.author } }
-    File.open(BOOKS_FILE, 'w') do |file|
-      file.write(JSON.generate(book_data))
-    end
+    File.write(BOOKS_FILE, JSON.generate(book_data))
   end
 
   def save_people
@@ -32,15 +30,11 @@ module DataManager
       attributes
     end
 
-    File.open(PEOPLE_FILE, 'w') do |file|
-      file.write(JSON.generate(people_data))
-    end
+    File.write(PEOPLE_FILE, JSON.generate(people_data))
   end
 
   def save_rentals
-    File.open(RENTALS_FILE, 'w') do |file|
-      file.write(JSON.generate(@rentals))
-    end
+    File.write(RENTALS_FILE, JSON.generate(@rentals))
   end
 
   def load_data
@@ -61,7 +55,8 @@ module DataManager
               else
                 people_data.map do |person_info|
                   if person_info['role'] == 'student'
-                    student = Student.new(person_info['age'], person_info['name'], parent_permission: person_info['parent_permission'])
+                    student = Student.new(person_info['age'], person_info['name'],
+                                          parent_permission: person_info['parent_permission'])
                     student.role = 'student'
                     student
                   else
@@ -70,7 +65,7 @@ module DataManager
                     teacher
                   end
                 end
-end
+              end
   end
 
   def load_rentals
