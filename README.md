@@ -75,10 +75,16 @@ bundler install
 
 ### Run tests
 
-To run tests, run the following command:
+To run linters tests, run the following command:
 
 ```bash
   rubocop
+```
+
+To run unit tests, run the following command:
+
+```bash
+  rspec spec
 ```
 
 ### Run console
