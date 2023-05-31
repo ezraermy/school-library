@@ -8,6 +8,8 @@ class Classroom
   end
 
   def add_student(student)
+    return if @students.include?(student)
+
     student.classroom = self
     @students << student
   end
