@@ -1,14 +1,10 @@
 class Book
-  attr_reader :title, :author, :id
+  attr_reader :rentals
+  attr_accessor :title, :author
 
   def initialize(title, author)
     @title = title
     @author = author
-    @id = self.class.generate_next_id
-  end
-
-  def self.generate_next_id
-    @next_id ||= 1
-    @next_id += 1
+    @rentals = []
   end
 end
