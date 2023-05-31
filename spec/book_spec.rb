@@ -10,5 +10,9 @@ describe Book do
       book = Book.new('title', 'author')
       expect(book.author).to eq('author')
     end
+    it 'has an empty array of rentals' do
+      book = Book.new('title', 'author')
+      expect(book.rentals).to eq([])
+    end
   end
 end
