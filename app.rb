@@ -4,12 +4,17 @@ require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
 require_relative 'classroom'
+require_relative 'data_manager'
 
 class App
+  include DataManager
+
   def initialize
     @books = []
     @people = []
     @rentals = []
+    @next_person_id = 1
+    @next_rental_id = 1
   end
 
   def list_all_books
@@ -59,6 +64,8 @@ class App
     student = Student.new(age, nil, name, parent_permission: parent_permission)
     student.role = 'student' # Add this line to set the role as "student"
     @people << student
+    @next_person_id += 1
+
     puts 'Person created successfully'
   end
 
@@ -75,6 +82,8 @@ class App
     teacher = Teacher.new(age, specialization, name)
     teacher.role = 'teacher' # Add this line to set the role as "teacher"
     @people << teacher
+    @next_person_id += 1
+
     puts 'Person created successfully'
   end
 
@@ -98,8 +107,10 @@ class App
     puts 'Enter the rental date (e.g., YYYY-MM-DD):'
     date = gets.chomp
 
-    rental = Rental.new(date, book, person)
+    rental = Rental.new(@next_rental_id, date, book, person)
     @rentals << rental
+    @next_rental_id += 1 # Increment the next rental ID
+
     puts 'Rental created successfully'
   end
 
@@ -110,7 +121,7 @@ class App
     puts 'Enter the number corresponding to the book:'
     book_number = gets.chomp.to_i
 
-    book = @books[book_number]
+    book = @books[book_number - 1]
 
     puts 'Invalid book number. Please try again.' if book.nil?
 
@@ -124,7 +135,7 @@ class App
     puts 'Enter the number corresponding to the person:'
     person_number = gets.chomp.to_i
 
-    person = @people[person_number]
+    person = @people[person_number - 1]
 
     puts 'Invalid person number. Please try again.' if person.nil?
 

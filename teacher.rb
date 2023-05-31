@@ -10,6 +10,18 @@ class Teacher < Person
     @role = 'teacher'
   end
 
+  def attributes
+    {
+      id: @id,
+      name: @name,
+      age: @age,
+      parent_permission: @parent_permission,
+      rentals: @rentals,
+      specialization: @specialization,
+      role: @role
+    }
+  end
+
   def can_use_services?
     true
   end
