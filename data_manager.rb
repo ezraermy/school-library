@@ -45,6 +45,7 @@ module DataManager
     load_books
     load_people
     load_rentals
+    @rentals = []
   end
 
   def load_books
