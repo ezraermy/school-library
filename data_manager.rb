@@ -34,7 +34,11 @@ module DataManager
   end
 
   def save_rentals
-    File.write(RENTALS_FILE, JSON.generate(@rentals))
+    rental_data = @rentals.map do |rental|
+      { 'date' => rental.date, 'book_id' => rental.book.id, 'person_id' => rental.person.id }
+    end
+
+    File.write(RENTALS_FILE, JSON.generate(rental_data))
   end
 
   def load_data
@@ -56,7 +60,7 @@ module DataManager
               else
                 people_data.map do |person_info|
                   if person_info['role'] == 'student'
-                    student = Student.new(person_info['age'], person_info['name'],
+                    student = Student.new(person_info['age'], person_info['classroom'], person_info['name'],
                                           parent_permission: person_info['parent_permission'])
                     student.role = 'student'
                     student
@@ -70,7 +74,24 @@ module DataManager
   end
 
   def load_rentals
-    @rentals = load_data_from_file(RENTALS_FILE) || []
+    rental_data = load_data_from_file(RENTALS_FILE)
+    @rentals = []
+    rental_data&.each do |rental_info|
+      book = find_book_by_id(rental_info['book_id'])
+      person = find_person_by_id(rental_info['person_id'])
+      if book && person
+        rental = Rental.new(rental_info['date'], book, person)
+        @rentals << rental
+      end
+    end
+  end
+
+  def find_book_by_id(book_id)
+    @books.find { |book| book.id == book_id }
+  end
+
+  def find_person_by_id(person_id)
+    @people.find { |person| person.id == person_id }
   end
 
   def load_data_from_file(filename)
