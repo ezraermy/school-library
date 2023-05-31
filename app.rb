@@ -13,6 +13,8 @@ class App
     @books = []
     @people = []
     @rentals = []
+    @next_person_id = 1
+    @next_rental_id = 1
   end
 
   def list_all_books
@@ -62,6 +64,8 @@ class App
     student = Student.new(age, nil, name, parent_permission: parent_permission)
     student.role = 'student' # Add this line to set the role as "student"
     @people << student
+    @next_person_id += 1
+
     puts 'Person created successfully'
   end
 
@@ -78,6 +82,8 @@ class App
     teacher = Teacher.new(age, specialization, name)
     teacher.role = 'teacher' # Add this line to set the role as "teacher"
     @people << teacher
+    @next_person_id += 1
+
     puts 'Person created successfully'
   end
 
@@ -101,8 +107,10 @@ class App
     puts 'Enter the rental date (e.g., YYYY-MM-DD):'
     date = gets.chomp
 
-    rental = Rental.new(date, book, person)
+    rental = Rental.new(@next_rental_id, date, book, person)
     @rentals << rental
+    @next_rental_id += 1 # Increment the next rental ID
+
     puts 'Rental created successfully'
   end
 
